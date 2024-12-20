@@ -6,7 +6,6 @@ import pytest
 from elasticai.creator.vhdl.design.design import Design
 
 
-
 @pytest.fixture
 def seq_conv1d_design() -> Design:
     return Sequential(
