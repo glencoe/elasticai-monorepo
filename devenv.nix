@@ -33,13 +33,10 @@ in
   languages.python = {
     enable = true;
     version = "3.10";
-    uv.enable = false;
-    venv.enable = false;
-    
+    uv.enable = true;
     uv.package = unstablePkgs.uv;
     uv.sync.enable = false;
     uv.sync.allExtras = false;
-
   };
 
   ## Commented out while we're configuring pre-commit manually
