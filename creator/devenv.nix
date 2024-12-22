@@ -8,7 +8,7 @@
 
 let
   unstablePkgs = import inputs.nixpkgs-unstable { system = pkgs.stdenv.system; };
-  pyp = pkgs.python311Packages;
+  pyp = pkgs.python310Packages;
 in
 {
 
@@ -32,12 +32,8 @@ in
   languages.c.enable = true;
   languages.python = {
     enable = true;
-    package = pkgs.python311;
-    poetry.enable = true;
-    poetry.activate.enable = false;
-    uv.enable = false;
-    venv.enable = false;
-    
+    package = pkgs.python310;
+    uv.enable = true;
     uv.package = unstablePkgs.uv;
     uv.sync.enable = false;
     uv.sync.allExtras = false;
