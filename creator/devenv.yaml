@@ -9,4 +9,4 @@ inputs:
   nixpkgs-unstable:
     url: github:nixos/nixpkgs/nixpkgs-unstable
 imports:
-  - ./creator/
+  - ./devenv_modules/ghdl/
