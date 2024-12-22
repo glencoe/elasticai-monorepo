@@ -1,61 +1,45 @@
+{ pkgs, lib, config, inputs, ... }:
+
 {
-  pkgs,
-  lib,
-  config,
-  inputs,
-  ...
-}:
+  # https://devenv.sh/basics/
+  env.GREET = "devenv";
 
-let
-  unstablePkgs = import inputs.nixpkgs-unstable { system = pkgs.stdenv.system; };
-  pyp = pkgs.python311Packages;
-in
-{
+  # https://devenv.sh/packages/
+  packages = [ pkgs.git ];
 
-  packages = [
-    pkgs.git
-    pkgs.doxygen
-    pkgs.diffedit3
-    pkgs.asciidoctor
-    pkgs.gtkwave  # visualize wave forms from hw simulations
-    pkgs.python312
-    pkgs.python310
-    pkgs.hwatch  # continually rerun a command and print its output
-    pkgs.jujutsu  # next generation vcs for mental sanity
-    pkgs.diffedit3  # 3-pane merge editor
-    pkgs.act  # test github workflows locally
-    unstablePkgs.mypy  # python type checker
-    unstablePkgs.ruff  # linter/formatter for python
-    unstablePkgs.vale  # syntax aware linter for prose
-    unstablePkgs.act  # run github workflows locally
-  ]; 
-  languages.c.enable = true;
-  languages.python = {
-    enable = true;
-    package = pkgs.python311;
-    uv.enable = true;
-    uv.package = unstablePkgs.uv;
-    uv.sync.enable = false;
-    uv.sync.allExtras = false;
+  # https://devenv.sh/languages/
+  # languages.rust.enable = true;
 
-  };
+  # https://devenv.sh/processes/
+  # processes.cargo-watch.exec = "cargo-watch";
 
-  ## Commented out while we're configuring pre-commit manually
-  # pre-commit.hooks = {
-  #   shellcheck.enable = true;
-  #   ripsecrets.enable = true; # don't commit secrets
-  #   ruff.enable = true; # lint and automatically fix simple problems/reformat
-  #   taplo.enable = true; # reformat toml
-  #   nixfmt-rfc-style.enable = true; # reformat nix
-  #   ruff-format.enable = true;
-  #   mypy = {
-  #     enable = false;
-  #   }; # check type annotations
-  #   end-of-file-fixer.enable = true;
-  #   commitizen.enable = true; # help adhering to commit style guidelines
-  #   check-toml.enable = true; # check toml syntax
-  #   check-case-conflicts.enable = true;
-  #   check-added-large-files.enable = true;
+  # https://devenv.sh/services/
+  # services.postgres.enable = true;
+
+  # https://devenv.sh/scripts/
+  scripts.hello.exec = ''
+    echo hello from $GREET
+  '';
+
+  enterShell = ''
+    hello
+    git --version
+  '';
+
+  # https://devenv.sh/tasks/
+  # tasks = {
+  #   "myproj:setup".exec = "mytool build";
+  #   "devenv:enterShell".after = [ "myproj:setup" ];
   # };
 
+  # https://devenv.sh/tests/
+  enterTest = ''
+    echo "Running tests"
+    git --version | grep --color=auto "${pkgs.git.version}"
+  '';
+
+  # https://devenv.sh/pre-commit-hooks/
+  # pre-commit.hooks.shellcheck.enable = true;
+
+  # See full reference at https://devenv.sh/reference/options/
 }
