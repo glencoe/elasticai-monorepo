@@ -1,0 +1,7 @@
+add_subdirectory(TestFreeRTOS)
+add_subdirectory(TestNetworking)
+add_subdirectory(TestFlash)
+add_subdirectory(TestConfiguration)
+add_subdirectory(Sensors)
+add_subdirectory(TestStub)
+add_subdirectory(TestMiddleware)
