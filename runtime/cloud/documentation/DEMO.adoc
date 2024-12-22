@@ -1,0 +1,89 @@
+= DEMO
+:toc:
+:toclevels: 3
+:toc-placement!:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+toc::[]
+
+For running the DEMO, four parts are needed.
+An MQTT Broker, the Monitor, and an EnV5 Device.
+
+The three software parts can be started together by using the provided link:../compose.yaml[docker compose file].
+For this, the Twin and Monitor docker images need to be built beforehand (See link:../README.adoc#_build_docker_container[README]).
+
+[source,bash]
+----
+docker compose up
+----
+
+== Communication
+
+The diagrams show simplified, how the parties communicate with each other in the DEMO.
+
+=== Status
+
+ifdef::env-github[]
+[source,mermaid]
+endif::[]
+ifndef::env-github[]
+[mermaid]
+endif::[]
+....
+sequenceDiagram
+    participant monitorCommunicationEndpoint as Monitor
+    participant broker as Broker
+
+    device ->> broker: STATUS
+    broker ->> monitorCommunicationEndpoint: enV5 STATUS
+....
+
+=== DATA
+
+NOTE: Broker removed for simplicity
+
+ifdef::env-github[]
+[source,mermaid]
+endif::[]
+ifndef::env-github[]
+[mermaid]
+endif::[]
+....
+sequenceDiagram
+    participant monitorCommunicationEndpoint as Monitor
+    participant device as enV5
+
+    monitorCommunicationEndpoint ->> device: START
+
+    device ->> monitorCommunicationEndpoint: DATA
+
+    monitorCommunicationEndpoint ->> device: STOP
+....
+
+=== FLASH
+
+NOTE: Broker removed for simplicity
+
+ifdef::env-github[]
+[source,mermaid]
+endif::[]
+ifndef::env-github[]
+[mermaid]
+endif::[]
+....
+sequenceDiagram
+    participant monitorCommunicationEndpoint as Monitor
+    participant device as enV5
+
+    monitorCommunicationEndpoint ->> device: FLASH
+
+    device ->> monitorCommunicationEndpoint: REQUEST BITFILE
+
+    device ->> monitorCommunicationEndpoint: DONE
+....

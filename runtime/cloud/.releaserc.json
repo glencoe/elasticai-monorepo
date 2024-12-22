@@ -1,0 +1,24 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/github",
+      {
+        "successComment": false,
+        "failCommetn": false,
+        "assets": {
+          "path": "monitor/build/libs/monitor.jar",
+          "label": "Monitor Java executable."
+        }
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "echo \"VERSION=${nextRelease.version}\" >> $GITHUB_OUTPUT"
+      }
+    ]
+  ]
+}
